@@ -10,36 +10,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Estudante {
+model Student {
   id           Int    @id @default(autoincrement())
-  matricula String @default(uuid())
-  nome         String
+  identification String @default(uuid())
+  name         String
   cpf          String
-  telefone     String
-  matriculas Matricula[]
+  phone     String
+  enrollments Enrollment[]
 }
 
-model Professor {
+model Teacher {
   id Int @id @default(autoincrement())
-  matricula String @default(uuid())
-  nome String
+  identification String @default(uuid())
+  name String
   cpf String
-  telefone String
-  cursos Curso[]
+  phone String
+  courses Course[]
 }
 
-model Matricula {
+model Enrollment {
   id Int @id @default(autoincrement())
-  id_estudante Int
-  estudante Estudante @relation(fields: [id_estudante], references: [id])
-  curso Curso @relation(fields: [id_curso], references: [id])
-  id_curso Int
+  student_id Int
+  student Student @relation(fields: [student_id], references: [id])
+  course Course @relation(fields: [course_id], references: [id])
+  course_id Int
 }
 
-model Curso {
+model Course {
   id Int @id @default(autoincrement())
-  id_curso String @default(uuid())
-  professor Professor @relation(fields: [professor_id], references: [id])
-  professor_id Int
-  matriculas Matricula[]
+  course_id String @default(uuid())
+  teacher Teacher @relation(fields: [teacher_id], references: [id])
+  teacher_id Int
+  enrollments Enrollment[]
 }
