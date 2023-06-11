@@ -1,0 +1,32 @@
+services:
+  api:
+    build:
+      context: .
+      target: development
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - school-app-network
+  db:
+    image: postgres
+    env_file:
+      - .env
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - school-app-network
+volumes:
+  postgres_data:
+networks:
+  school-app-network:
+    name: school-app-network
